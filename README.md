@@ -1,4 +1,4 @@
-<b>Proiect la 'Sisteme Specializate cu Microprocesoare'<b/>
+<b>Proiect la 'Sisteme Specializate cu Microprocesoare'</b>
 
 Echipa:
 
