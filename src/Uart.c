@@ -41,7 +41,7 @@ void UART0_Init(uint32_t baud_rate)
 	UART0->C2 &= ~((UART0_C2_RE_MASK) | (UART0_C2_TE_MASK)); 
 	
 	//Configurare Baud Rate
-	uint32_t osr = 15; // Over-Sampling Rate (numarul de esantioane luate per bit-time)
+	uint32_t osr = 16; // Over-Sampling Rate (numarul de esantioane luate per bit-time)
 	
 	//SBR - vom retine valoarea baud rate-ului calculat pe baza frecventei ceasului de sistem
 	// 	 SBR  -		b16 b15 b14 [b13 b12 b11 b10 b09		b08 b07 b06 b05 b04 b03 b02 b01] &
