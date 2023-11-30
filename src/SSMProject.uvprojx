@@ -414,6 +414,31 @@
               <FileType>5</FileType>
               <FilePath>.\Uart.h</FilePath>
             </File>
+            <File>
+              <FileName>Gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ClockSettings.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ClockSettings.h</FilePath>
+            </File>
+            <File>
+              <FileName>ClockSettings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ClockSettings.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
