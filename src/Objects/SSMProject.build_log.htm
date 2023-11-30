@@ -27,7 +27,6 @@ Project File Date:  11/30/2023
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
-assembling startup_MKL25Z4.s...
 main.c(1): warning: In file included from...
 ./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
 // Functie de initializare a modulului periferic
@@ -35,6 +34,13 @@ main.c(1): warning: In file included from...
 ./Pit.h(7): warning: no newline at end of file [-Wnewline-eof]
 void PIT_IRQHandler(void);
                           ^
+main.c(2): warning: In file included from...
+./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
+#define RED_LED_PIN 18 // PORT B PIN 18
+                       ^
+./Gpio.h(9): warning: no newline at end of file [-Wnewline-eof]
+void RGBLed_Init(void);
+                       ^
 main.c(3): warning: In file included from...
 ./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
 void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
@@ -42,12 +48,11 @@ void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet
 ./Uart.h(5): warning: no newline at end of file [-Wnewline-eof]
 void UART0_Init(uint32_t baud_rate); // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
                                                                                                                                              ^
-main.c(11): warning: no newline at end of file [-Wnewline-eof]
+main.c(12): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-5 warnings generated.
+7 warnings generated.
 compiling main.c...
-compiling system_MKL25Z4.c...
 Pit.c(1): warning: In file included from...
 ./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
 // Functie de initializare a modulului periferic
@@ -62,14 +67,33 @@ void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet
 ./Uart.h(5): warning: no newline at end of file [-Wnewline-eof]
 void UART0_Init(uint32_t baud_rate); // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
                                                                                                                                              ^
-Pit.c(6): warning: // comments are not allowed in this language [-Wcomment]
+Pit.c(3): warning: In file included from...
+./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
+#define RED_LED_PIN 18 // PORT B PIN 18
+                       ^
+./Gpio.h(9): warning: no newline at end of file [-Wnewline-eof]
+void RGBLed_Init(void);
+                       ^
+Pit.c(7): warning: // comments are not allowed in this language [-Wcomment]
         // Activarea semnalului de ceas pentru perifericul PIT
         ^
-Pit.c(35): warning: no newline at end of file [-Wnewline-eof]
+Pit.c(61): warning: no newline at end of file [-Wnewline-eof]
         
         ^
-6 warnings generated.
+8 warnings generated.
 compiling Pit.c...
+Gpio.c(1): warning: In file included from...
+./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
+#define RED_LED_PIN 18 // PORT B PIN 18
+                       ^
+./Gpio.h(9): warning: no newline at end of file [-Wnewline-eof]
+void RGBLed_Init(void);
+                       ^
+Gpio.c(26): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+3 warnings generated.
+compiling Gpio.c...
 Uart.c(1): warning: In file included from...
 ./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
 void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
@@ -92,13 +116,15 @@ Uart.c(73): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
 Uart.c(44): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-        uint32_t osr = 15; // Over-Sampling Rate (numarul de esantioane luate per bit-time)
+        uint32_t osr = 16; // Over-Sampling Rate (numarul de esantioane luate per bit-time)
                  ^
 7 warnings generated.
 compiling Uart.c...
+compiling system_MKL25Z4.c...
+assembling startup_MKL25Z4.s...
 linking...
-Program Size: Code=1356 RO-data=208 RW-data=0 ZI-data=352  
-".\Objects\SSMProject.axf" - 0 Error(s), 18 Warning(s).
+Program Size: Code=1660 RO-data=208 RW-data=0 ZI-data=360  
+".\Objects\SSMProject.axf" - 0 Error(s), 25 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -126,8 +152,8 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup:2.5.0
       Source file:   Device/Source/system_MKL25Z4.c
-      Source file:   Device/Source/ARM/startup_MKL25Z4.s
       Include file:  Device/Source/system_MKL25Z4.h
+      Source file:   Device/Source/ARM/startup_MKL25Z4.s
 Build Time Elapsed:  00:00:02
 </pre>
 </body>
