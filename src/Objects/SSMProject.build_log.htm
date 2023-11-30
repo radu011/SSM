@@ -1,0 +1,134 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Ionascu Bianca-Daniela, Proiect, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.38.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.19
+Assembler:       Armasm.exe V6.19
+Linker/Locator:  ArmLink.exe V6.19
+Library Manager: ArmAr.exe V6.19
+Hex Converter:   FromElf.exe V6.19
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DARMCM1.DLL V1.19.6.0
+Target DLL:      CMSIS_AGDI.dll V1.33.15.0
+Dialog DLL:      TARMCM1.DLL V1.14.6.0
+ 
+<h2>Project:</h2>
+C:\Users\Bianca\Desktop\Proiect_microprocesoare\SSM\src\SSMProject.uvprojx
+Project File Date:  11/30/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Rebuild target 'Target 1'
+assembling startup_MKL25Z4.s...
+main.c(1): warning: In file included from...
+./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
+// Functie de initializare a modulului periferic
+^
+./Pit.h(7): warning: no newline at end of file [-Wnewline-eof]
+void PIT_IRQHandler(void);
+                          ^
+main.c(3): warning: In file included from...
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
+void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
+                                   ^
+./Uart.h(5): warning: no newline at end of file [-Wnewline-eof]
+void UART0_Init(uint32_t baud_rate); // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
+                                                                                                                                             ^
+main.c(11): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+5 warnings generated.
+compiling main.c...
+compiling system_MKL25Z4.c...
+Pit.c(1): warning: In file included from...
+./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
+// Functie de initializare a modulului periferic
+^
+./Pit.h(7): warning: no newline at end of file [-Wnewline-eof]
+void PIT_IRQHandler(void);
+                          ^
+Pit.c(2): warning: In file included from...
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
+void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
+                                   ^
+./Uart.h(5): warning: no newline at end of file [-Wnewline-eof]
+void UART0_Init(uint32_t baud_rate); // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
+                                                                                                                                             ^
+Pit.c(6): warning: // comments are not allowed in this language [-Wcomment]
+        // Activarea semnalului de ceas pentru perifericul PIT
+        ^
+Pit.c(35): warning: no newline at end of file [-Wnewline-eof]
+        
+        ^
+6 warnings generated.
+compiling Pit.c...
+Uart.c(1): warning: In file included from...
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
+void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
+                                   ^
+./Uart.h(5): warning: no newline at end of file [-Wnewline-eof]
+void UART0_Init(uint32_t baud_rate); // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
+                                                                                                                                             ^
+Uart.c(5): warning: // comments are not allowed in this language [-Wcomment]
+        //Punem in asteptare pana cand registrul de transmisie a datelor nu este gol
+        ^
+Uart.c(6): warning: while loop has empty body [-Wempty-body]
+        while(!(UART0->S1 & UART0_S1_TDRE_MASK));
+                                                ^
+Uart.c(6): note: put the semicolon on a separate line to silence this warning
+Uart.c(14): warning: while loop has empty body [-Wempty-body]
+        while(!(UART0->S1 & UART0_S1_RDRF_MASK));
+                                                ^
+Uart.c(14): note: put the semicolon on a separate line to silence this warning
+Uart.c(73): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+Uart.c(44): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+        uint32_t osr = 15; // Over-Sampling Rate (numarul de esantioane luate per bit-time)
+                 ^
+7 warnings generated.
+compiling Uart.c...
+linking...
+Program Size: Code=1356 RO-data=208 RW-data=0 ZI-data=352  
+".\Objects\SSMProject.axf" - 0 Error(s), 18 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.Kinetis_KLxx_DFP.1.15.0.pack
+                Keil.Kinetis_KLxx_DFP.1.15.0
+                NXP Kinetis KLxx Series Device Support and Examples
+   * Component: Startup Version: 2.5.0
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/Device/MKL25Z128xxx4
+  ./RTE/_Target_1
+  D:/Keil/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  D:/Keil/Keil/Kinetis_KLxx_DFP/1.15.0/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: Keil::Device:Startup:2.5.0
+      Source file:   Device/Source/system_MKL25Z4.c
+      Source file:   Device/Source/ARM/startup_MKL25Z4.s
+      Include file:  Device/Source/system_MKL25Z4.h
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>
