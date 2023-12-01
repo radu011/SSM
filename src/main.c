@@ -13,6 +13,8 @@ int main(void)
 
 	// Buzzer_Sound(3);
 
+	Buzzer_Sing();
+
 	for (;;)
 	{
 		// read Sound Sensor data

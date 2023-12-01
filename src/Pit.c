@@ -22,7 +22,7 @@ void PIT_Init(void)
 	NVIC_ClearPendingIRQ(PIT_IRQn);
 	NVIC_SetPriority(PIT_IRQn, 5);
 	NVIC_EnableIRQ(PIT_IRQn);
-	
+
 	order = 0;
 	state = 0;
 }
@@ -93,5 +93,5 @@ void PIT_IRQHandler(void)
 
 void PIT_LED_Change_Order()
 {
-		order = (order + 1) % 2;
+	order = (order + 1) % 2;
 }

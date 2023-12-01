@@ -1,5 +1,7 @@
 #include "MKL25Z4.h"
 
+static uint8_t order = 0;
+
 // Functie folostia pentru a trimite un octet catre interfata UART
 void UART0_Transmit(uint8_t data);
 
