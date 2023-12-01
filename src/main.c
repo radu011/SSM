@@ -6,8 +6,9 @@ int main(void)
 {
 
 	UART0_Init(115200);
-	// PIT_Init();
-	// RGBLed_Init();
+	// UART0_Transmit('a');
+	PIT_Init();
+	RGBLed_Init();
 
 	Buzzer_Init();
 
