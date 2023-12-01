@@ -58,7 +58,7 @@ void UART0_Init(uint32_t baud_rate)
 	UART0->C1 = UART0_C1_M(0) | UART0_C1_PE(0);
 
 	// Transmisie incepand cu LSB
-	UART0->S2 = UART0_S2_MSBF(0);
+	UART0->S2 |= UART0_S2_MSBF(0);
 
 	// Dezactivare intreruperi la transmisie
 	UART0->C2 |= UART0_C2_TIE(0);

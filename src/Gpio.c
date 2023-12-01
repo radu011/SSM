@@ -64,3 +64,60 @@ void Buzzer_Sound(uint8_t noBip)
 			timerCount++;
 	}
 }
+
+static void delay(int value)
+{
+	while (value > 0)
+		value--;
+}
+
+static void playTone(int tone, int duration)
+{
+	long i;
+	for (i = 0; i < duration * 1000; i += tone * 2)
+	{
+		GPIOD_PSOR |= (1 << BUZZER_PIN);
+		delay(tone / 4);
+		// delay(tone / 2);
+		GPIOD_PCOR |= (1 << BUZZER_PIN);
+		delay(tone * 2.5);
+		// delay(tone * 2);
+	}
+}
+
+static void playNote(char note, int duration)
+{
+	char names[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
+	int tones[] = {1915, 1700, 1519, 1432, 1275, 1136, 1014, 956};
+
+	int i;
+	for (i = 0; i < 8; i++)
+	{
+		if (names[i] == note)
+		{
+			playTone(tones[i], duration);
+		}
+	}
+}
+
+void Buzzer_Sing(void)
+{
+	int length;
+	char notes[] = "eeeeeeegcde fffffeeeeddedg";
+	int beats[] = {1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2};
+	int tempo = 300;
+
+	int i;
+	for (i = 0; i < length; i++)
+	{
+		if (notes[i] == ' ')
+		{
+			delay(beats[i] * tempo);
+		}
+		else
+		{
+			playNote(notes[i], beats[i] * tempo);
+		}
+		delay(tempo / 2);
+	}
+}

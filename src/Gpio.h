@@ -8,4 +8,6 @@
 
 void RGBLed_Init(void);
 void Buzzer_Init(void);
+
 void Buzzer_Sound(uint8_t noBip);
+void Buzzer_Sing(void);
