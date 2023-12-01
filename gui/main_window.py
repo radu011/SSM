@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QVBoxLayout, QWidget, QGroupBox, QLabel, QPushButton, QLineEdit, QTextEdit
-from PySide6.QtGui import QIcon, QPalette, QColor, QFont
+from PySide6.QtGui import QIcon, QPalette, QColor, QFont, QTextCursor
 from PySide6.QtCore import Qt
 import pyqtgraph as pg
-import MySerial
+from MySerial import MySerial
 
 
 class MainWindow(QMainWindow):
@@ -15,6 +15,11 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+
+        # set serial
+        self.serial = MySerial()
+        self.serial.start("COM10", 115200)
+
         self.setWindowTitle(f"Proiect Microprocesoare {self.promotie}")
         self.setWindowIcon(QIcon("./icon.png"))
 
@@ -37,8 +42,10 @@ class MainWindow(QMainWindow):
         control_panel_box = QGroupBox("Control Panel")
         control_panel_box.setFont(bold_font)
 
-        button1 = QPushButton("Control 1")
-        button2 = QPushButton("Control 2")
+        button1 = QPushButton("Change LED order")
+        button1.clicked.connect(self.send_control_order)
+        button2 = QPushButton("Play music")
+        button2.clicked.connect(self.send_control_music)
         button3 = QPushButton("Send")
         button3.clicked.connect(self.send_input)
         self.line_edit = QLineEdit()
@@ -83,7 +90,23 @@ class MainWindow(QMainWindow):
         
         self.setCentralWidget(widget)
 
+    def add_text_debug(self, text: str, control: bool):
+        if(control is True):
+            self.text_edit.insertPlainText(f"CONTROL: {text}\n")
+        else:
+            self.text_edit.insertPlainText(f"INPUT: {text}\n")
+        self.text_edit.verticalScrollBar().setValue(self.text_edit.verticalScrollBar().maximum())
+
     def send_input(self):
         input = self.line_edit.text()
         self.line_edit.clear()
-        self.text_edit.insertPlainText(f"INPUT: {input}\n")
+        self.add_text_debug(input, False)
+        self.serial.sendData(input)
+
+    def send_control_order(self):
+        self.serial.sendData("c")
+        self.add_text_debug("Change led order", True)
+
+    def send_control_music(self):
+        self.serial.sendData("m")
+        self.add_text_debug("Playing music...", True)

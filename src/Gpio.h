@@ -6,6 +6,8 @@
 
 #define BUZZER_PIN (4) // PORT D PIN 4
 
+extern uint8_t play;
+
 void RGBLed_Init(void);
 void Buzzer_Init(void);
 

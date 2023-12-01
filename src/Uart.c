@@ -1,5 +1,6 @@
 #include "Uart.h"
 #include "Pit.h"
+#include "Gpio.h"
 
 void UART0_Transmit(uint8_t data)
 {
@@ -87,6 +88,15 @@ void UART0_IRQHandler(void)
 		if (ch == 'c') // c = change
 		{
 			PIT_LED_Change_Order();
+		}
+		else if (ch == 'm')
+		{
+			play = 1;
+		}
+		else
+		{
+			// echo buffer
+			UART0_Transmit(ch);
 		}
 	}
 }

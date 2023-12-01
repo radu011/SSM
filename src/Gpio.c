@@ -36,6 +36,8 @@ void Buzzer_Init(void)
 
 	// Stingerea buzzer-ului / punerea pe 0 logic
 	GPIOD_PCOR |= (1 << BUZZER_PIN);
+
+	play = 0;
 }
 
 void Buzzer_Sound(uint8_t noBip)
@@ -83,6 +85,7 @@ static void playTone(int tone, int duration)
 		delay(tone * 2.5);
 		// delay(tone * 2);
 	}
+	GPIOD_PCOR |= (1 << BUZZER_PIN);
 }
 
 static void playNote(char note, int duration)
@@ -102,7 +105,7 @@ static void playNote(char note, int duration)
 
 void Buzzer_Sing(void)
 {
-	int length;
+	int length = 26;
 	char notes[] = "eeeeeeegcde fffffeeeeddedg";
 	int beats[] = {1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2};
 	int tempo = 300;
