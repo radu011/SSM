@@ -8,3 +8,5 @@ uint8_t UART0_Receive(void);
 
 // Initializare a modulului UART pentru trasmiterea datelor, ce primeste ca parametru baud rate-ul dorit
 void UART0_Init(uint32_t baud_rate);
+
+void UART0_IRQHandler(void);
