@@ -6,8 +6,6 @@
 
 #define BUZZER_PIN (4) // PORT D PIN 4
 
-static uint8_t state = 0;
-
 void RGBLed_Init(void);
 void Buzzer_Init(void);
 void Buzzer_Sound(uint8_t noBip);

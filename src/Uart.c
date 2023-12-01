@@ -1,4 +1,5 @@
 #include "Uart.h"
+#include "Pit.h"
 
 void UART0_Transmit(uint8_t data)
 {
@@ -79,13 +80,13 @@ void UART0_Init(uint32_t baud_rate)
 
 void UART0_IRQHandler(void)
 {
+	uint8_t ch;
 	if (UART0->S1 & UART0_S1_RDRF_MASK)
 	{
-		uint8_t ch = UART0->D;
-		if (ch == 'a')
+		ch = UART0->D;
+		if (ch == 'c') // c = change
 		{
-			order++;
-			order = order % 2;
+			PIT_LED_Change_Order();
 		}
 	}
 }

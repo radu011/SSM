@@ -18,10 +18,13 @@ void PIT_Init(void)
 	// Activarea timerului de pe canalul 0
 	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TEN_MASK;
 
-	// Activarea intreruperii mascabile si setarea prioritatiis
+	// Activarea intreruperii mascabile si setarea prioritatii
 	NVIC_ClearPendingIRQ(PIT_IRQn);
 	NVIC_SetPriority(PIT_IRQn, 5);
 	NVIC_EnableIRQ(PIT_IRQn);
+	
+	order = 0;
+	state = 0;
 }
 
 void PIT_IRQHandler(void)
@@ -86,4 +89,9 @@ void PIT_IRQHandler(void)
 		state = state % 4;
 		PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK;
 	}
+}
+
+void PIT_LED_Change_Order()
+{
+		order = (order + 1) % 2;
 }

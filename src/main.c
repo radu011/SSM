@@ -6,7 +6,6 @@ int main(void)
 {
 
 	UART0_Init(115200);
-	// UART0_Transmit('a');
 	PIT_Init();
 	RGBLed_Init();
 

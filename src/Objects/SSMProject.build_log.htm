@@ -28,86 +28,128 @@ Project File Date:  11/30/2023
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
 main.c(1): warning: In file included from...
-./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
+./Pit.h(6): warning: // comments are not allowed in this language [-Wcomment]
 // Functie de initializare a modulului periferic
 ^
-./Pit.h(7): warning: no newline at end of file [-Wnewline-eof]
-void PIT_IRQHandler(void);
-                          ^
+./Pit.h(13): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+void PIT_LED_Change_Order();
+                         ^
+                          void
+./Pit.h(13): warning: no newline at end of file [-Wnewline-eof]
+void PIT_LED_Change_Order();
+                            ^
 main.c(2): warning: In file included from...
 ./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
 #define RED_LED_PIN 18   // PORT B PIN 18
                          ^
+./Gpio.h(11): warning: no newline at end of file [-Wnewline-eof]
+void Buzzer_Sound(uint8_t noBip);
+                                 ^
 main.c(3): warning: In file included from...
-./Uart.h(5): warning: // comments are not allowed in this language [-Wcomment]
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
 // Functie folostia pentru a trimite un octet catre interfata UART
 ^
-./Uart.h(14): warning: no newline at end of file [-Wnewline-eof]
+./Uart.h(12): warning: no newline at end of file [-Wnewline-eof]
 void UART0_IRQHandler(void);
                             ^
-main.c(15): warning: // comments are not allowed in this language [-Wcomment]
+main.c(14): warning: // comments are not allowed in this language [-Wcomment]
         // Buzzer_Sound(3);
         ^
-main.c(21): warning: no newline at end of file [-Wnewline-eof]
+main.c(20): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-7 warnings generated.
+9 warnings generated.
 compiling main.c...
 Pit.c(1): warning: In file included from...
-./Pit.h(3): warning: // comments are not allowed in this language [-Wcomment]
+./Pit.h(6): warning: // comments are not allowed in this language [-Wcomment]
 // Functie de initializare a modulului periferic
 ^
-./Pit.h(7): warning: no newline at end of file [-Wnewline-eof]
-void PIT_IRQHandler(void);
-                          ^
+./Pit.h(13): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+void PIT_LED_Change_Order();
+                         ^
+                          void
+./Pit.h(13): warning: no newline at end of file [-Wnewline-eof]
+void PIT_LED_Change_Order();
+                            ^
 Pit.c(2): warning: In file included from...
-./Uart.h(5): warning: // comments are not allowed in this language [-Wcomment]
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
 // Functie folostia pentru a trimite un octet catre interfata UART
 ^
-./Uart.h(14): warning: no newline at end of file [-Wnewline-eof]
+./Uart.h(12): warning: no newline at end of file [-Wnewline-eof]
 void UART0_IRQHandler(void);
                             ^
 Pit.c(3): warning: In file included from...
 ./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
 #define RED_LED_PIN 18   // PORT B PIN 18
                          ^
+./Gpio.h(11): warning: no newline at end of file [-Wnewline-eof]
+void Buzzer_Sound(uint8_t noBip);
+                                 ^
 Pit.c(7): warning: // comments are not allowed in this language [-Wcomment]
         // Activarea semnalului de ceas pentru perifericul PIT
         ^
-6 warnings generated.
-compiling Pit.c...
-assembling startup_MKL25Z4.s...
-Uart.c(1): warning: In file included from...
-./Uart.h(5): warning: // comments are not allowed in this language [-Wcomment]
-// Functie folostia pentru a trimite un octet catre interfata UART
-^
-./Uart.h(14): warning: no newline at end of file [-Wnewline-eof]
-void UART0_IRQHandler(void);
-                            ^
-Uart.c(5): warning: // comments are not allowed in this language [-Wcomment]
-        // Punem in asteptare pana cand registrul de transmisie a datelor nu este gol
-        ^
-Uart.c(49): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-        uint16_t sbr = (uint16_t)((DEFAULT_SYSTEM_CLOCK) / (baud_rate * (osr)));
-                 ^
-Uart.c(91): warning: no newline at end of file [-Wnewline-eof]
+Pit.c(94): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+void PIT_LED_Change_Order()
+                         ^
+                          void
+Pit.c(97): warning: no newline at end of file [-Wnewline-eof]
 }
  ^
-5 warnings generated.
+Pit.c(94): warning: no previous prototype for function 'PIT_LED_Change_Order' [-Wmissing-prototypes]
+void PIT_LED_Change_Order()
+     ^
+./Pit.h(13): note: this declaration is not a prototype; add 'void' to make it a prototype for a zero-parameter function
+void PIT_LED_Change_Order();
+     ^
+                          void
+11 warnings generated.
+compiling Pit.c...
+Uart.c(1): warning: In file included from...
+./Uart.h(3): warning: // comments are not allowed in this language [-Wcomment]
+// Functie folostia pentru a trimite un octet catre interfata UART
+^
+./Uart.h(12): warning: no newline at end of file [-Wnewline-eof]
+void UART0_IRQHandler(void);
+                            ^
+Uart.c(2): warning: In file included from...
+./Pit.h(6): warning: // comments are not allowed in this language [-Wcomment]
+// Functie de initializare a modulului periferic
+^
+./Pit.h(13): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+void PIT_LED_Change_Order();
+                         ^
+                          void
+./Pit.h(13): warning: no newline at end of file [-Wnewline-eof]
+void PIT_LED_Change_Order();
+                            ^
+Uart.c(6): warning: // comments are not allowed in this language [-Wcomment]
+        // Punem in asteptare pana cand registrul de transmisie a datelor nu este gol
+        ^
+Uart.c(50): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+        uint16_t sbr = (uint16_t)((DEFAULT_SYSTEM_CLOCK) / (baud_rate * (osr)));
+                 ^
+Uart.c(92): warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+8 warnings generated.
 compiling Uart.c...
 Gpio.c(1): warning: In file included from...
 ./Gpio.h(3): warning: // comments are not allowed in this language [-Wcomment]
 #define RED_LED_PIN 18   // PORT B PIN 18
                          ^
+./Gpio.h(11): warning: no newline at end of file [-Wnewline-eof]
+void Buzzer_Sound(uint8_t noBip);
+                                 ^
 Gpio.c(27): warning: // comments are not allowed in this language [-Wcomment]
         // Activarea semnalului de ceas pentru portul D (conexiune pe PTD4)
         ^
-2 warnings generated.
+3 warnings generated.
 compiling Gpio.c...
 compiling system_MKL25Z4.c...
+assembling startup_MKL25Z4.s...
 linking...
-Program Size: Code=2128 RO-data=216 RW-data=0 ZI-data=360  
-".\Objects\SSMProject.axf" - 0 Error(s), 20 Warning(s).
+Program Size: Code=2088 RO-data=216 RW-data=0 ZI-data=360  
+".\Objects\SSMProject.axf" - 0 Error(s), 31 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -137,7 +179,7 @@ Package Vendor: Keil
       Source file:   Device/Source/ARM/startup_MKL25Z4.s
       Source file:   Device/Source/system_MKL25Z4.c
       Include file:  Device/Source/system_MKL25Z4.h
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

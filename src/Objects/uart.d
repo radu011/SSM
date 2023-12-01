@@ -5,4 +5,4 @@
   D:\Keil\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h \
   D:\Keil\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h \
   D:\Keil\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h \
-  RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h
+  RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h Pit.h
