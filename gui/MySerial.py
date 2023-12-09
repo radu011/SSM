@@ -15,7 +15,13 @@ class MySerial():
         self.connection.close()
         self.connection.open()
 
+    def invert_bytes(self, bytes_obj):
+        return bytes(~b & 0xFF for b in bytes_obj)
+
     def sendData(self, data: str) -> int:
+        # toSend = self.invert_bytes(bytes(data, 'utf-8'))
+        # print(toSend)
+        # return self.connection.write(toSend)
         return self.connection.write(bytes(data, 'utf-8'))
 
     def receiveData(self, noBytes: int) -> str:
@@ -31,13 +37,13 @@ class MySerial():
         self.connection = None
 
 
-# def main():
-#     conn = MySerial()
-#     conn.start(port = "COM10", baudRate = 115200)
-#     conn.sendData("m")
-#     #print(conn.receiveData(conn, 4))
+def main():
+    conn = MySerial()
+    conn.start(port = "COM10", baudRate = 115200)
+    conn.sendData("c")
+    #print(conn.receiveData(conn, 4))
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
