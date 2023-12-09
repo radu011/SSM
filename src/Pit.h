@@ -3,8 +3,11 @@
 static uint8_t order;
 static uint8_t state;
 
-// Functie de initializare a modulului periferic
+// Functie de initializare a modulului periferic (PIT[0])
 void PIT_Init(void);
+
+// Functie de initializare a modulului periferic (PIT[1])
+void PIT_Init2(void);
 
 // Functia de tratare a intreruperilor pentru perifericul PIT
 void PIT_IRQHandler(void);

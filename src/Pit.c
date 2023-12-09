@@ -27,6 +27,10 @@ void PIT_Init(void)
 	state = 0;
 }
 
+void PIT_Init2(void)
+{
+}
+
 void PIT_IRQHandler(void)
 {
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK)
