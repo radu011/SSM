@@ -46,6 +46,8 @@ class MainWindow(QMainWindow):
         button1.clicked.connect(self.send_control_order)
         button2 = QPushButton("Play music")
         button2.clicked.connect(self.send_control_music)
+        button4 = QPushButton("Get light status")
+        button4.clicked.connect(self.get_light_status)
         button3 = QPushButton("Send")
         button3.clicked.connect(self.send_input)
         self.line_edit = QLineEdit()
@@ -55,6 +57,7 @@ class MainWindow(QMainWindow):
         control_panel_box_layout.setSpacing(5)
         control_panel_box_layout.addWidget(button1, 1)
         control_panel_box_layout.addWidget(button2, 1)
+        control_panel_box_layout.addWidget(button4, 1)
 
         control_panel_box_layout.addStretch()
         control_panel_box_layout.addWidget(line_edit_label)
@@ -110,3 +113,13 @@ class MainWindow(QMainWindow):
     def send_control_music(self):
         self.serial.sendData("m")
         self.add_text_debug("Playing music...", True)
+        
+    def get_light_status(self):
+        self.serial.sendData("l")
+        received = self.serial.receiveData(1)
+        # activ pe 0
+        if(received == b'0'):
+            self.add_text_debug("Afara este lumina!", True)
+        else:
+            self.add_text_debug("Afara este intuneric!", True)
+            
