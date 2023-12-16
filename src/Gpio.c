@@ -29,13 +29,14 @@ void Light_Init(void)
 	PORTA->PCR[LIGHT_PIN] &= ~PORT_PCR_MUX_MASK;
 	PORTA->PCR[LIGHT_PIN] |= PORT_PCR_MUX(1);
 	
-	// Setam pentru input pinu-ul desi el default este pe input dar sa fim siguri
+	/* Setam pentru input pinu-ul desi el default este pe input dar sa fim siguri */
 	GPIOA->PDDR |= (0 << LIGHT_PIN);
 }
 
 uint8_t Light_Read(void)
 {
-	if(GPIOA->PDIR&(1<<LIGHT_PIN))
+	/* activ pe 0 */
+	if(GPIOA->PDIR & (1<<LIGHT_PIN))
 	{
 		return 1;
 	}
@@ -46,17 +47,17 @@ uint8_t Light_Read(void)
 
 void Buzzer_Init(void)
 {
-	// Activarea semnalului de ceas pentru portul D (conexiune pe PTD4)
+	/* Activarea semnalului de ceas pentru portul D (conexiune pe PTD4) */
 	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
 
-	// Utilizare GPIO ca varianta de multiplexare
+	/* Utilizare GPIO ca varianta de multiplexare */
 	PORTD->PCR[BUZZER_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTD->PCR[BUZZER_PIN] |= PORT_PCR_MUX(1); // GPIO
+	PORTD->PCR[BUZZER_PIN] |= PORT_PCR_MUX(1); // GPIO */
 
-	// Configurare pin pe post de output
+	/* Configurare pin pe post de output */
 	GPIOD_PDDR |= (1 << BUZZER_PIN);
 
-	// Stingerea buzzer-ului / punerea pe 0 logic
+	/* Stingerea buzzer-ului / punerea pe 0 logic */
 	GPIOD_PCOR |= (1 << BUZZER_PIN);
 
 	play = 0;
@@ -67,22 +68,22 @@ void Buzzer_Sound(uint8_t noBip)
 	uint32_t timer = 200000;
 	uint32_t timerCount;
 
-	// Numarul de bip-uri
+	/* Numarul de bip-uri */
 	uint8_t i = 0;
 	for (i = 0; i < noBip; i++)
 	{
-		// Activarea buzzer-ului (1 logic)
+		/* Activarea buzzer-ului (1 logic) */
 		GPIOD_PSOR |= (1 << BUZZER_PIN);
 
-		// Durata sunetului
+		/* Durata sunetului */
 		timerCount = 0;
 		while (timerCount < timer)
 			timerCount++;
 
-		// Dezactivarea buzzer-ului (1 logic)
+		/* Dezactivarea buzzer-ului (1 logic) */
 		GPIOD_PCOR |= (1 << BUZZER_PIN);
 
-		// Durata pauzei dintre sunete
+		/* Durata pauzei dintre sunete */
 		timerCount = 0;
 		while (timerCount < timer)
 			timerCount++;

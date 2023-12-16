@@ -88,10 +88,17 @@ void UART0_IRQHandler(void)
 		if (ch == 'c') // c = change
 		{
 			PIT_LED_Change_Order();
+			UART0_Transmit(ch);
 		}
 		else if (ch == 'm')
 		{
 			play = 1;
+			UART0_Transmit(ch);
+		}
+		else if (ch == 'l')
+		{
+			uint8_t	light = Light_Read();
+			UART0_Transmit(light + 0x30);
 		}
 		else
 		{

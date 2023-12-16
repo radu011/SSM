@@ -37,13 +37,13 @@ class MySerial():
         self.connection = None
 
 
-def main():
-    conn = MySerial()
-    conn.start(port = "COM10", baudRate = 115200)
-    conn.sendData("c")
-    #print(conn.receiveData(conn, 4))
+# def main():
+#     conn = MySerial()
+#     conn.start(port = "COM10", baudRate = 115200)
+#     conn.sendData("c")
+#     print(conn.receiveData(conn, 4))
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
