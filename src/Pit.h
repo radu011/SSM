@@ -13,4 +13,4 @@ void PIT_Init2(void);
 void PIT_IRQHandler(void);
 
 // Functia care schimba ordinea de aprindere a culorilor(schimbare valoare variabila order)
-void PIT_LED_Change_Order();
+void PIT_LED_Change_Order(void);
