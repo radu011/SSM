@@ -429,6 +429,16 @@
               <FileType>5</FileType>
               <FilePath>.\SysTick.h</FilePath>
             </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Adc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

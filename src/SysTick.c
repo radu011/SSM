@@ -1,6 +1,8 @@
 #include "SysTick.h"
 #include "Uart.h"
 
+volatile uint8_t flagSysTick;
+
 void Init_SysTick(void)
 {
     // Setarea valorii de inceput/reset pentru numarator
@@ -22,4 +24,7 @@ void Init_SysTick(void)
 void SysTick_Handler(void)
 {
 		flagSysTick = 1;
+	
+		// activate intrerupere pentru ADC
+		ADC0->SC1[0] |= ADC_SC1_AIEN_MASK;
 }
