@@ -27,75 +27,52 @@ void PIT_Init(void)
 	state = 0;
 }
 
-void PIT_Init2(void)
-{
-}
-
 void PIT_IRQHandler(void)
 {
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK)
 	{
+		GPIOB->PCOR |= (1 << RED_LED_PIN);
+		GPIOB->PCOR |= (1 << GREEN_LED_PIN);
+		GPIOD->PCOR |= (1 << BLUE_LED_PIN);
+		
+		if (state == 1)
+		{
+			GPIOB->PSOR |= (1 << RED_LED_PIN);
+			GPIOB->PSOR |= (1 << GREEN_LED_PIN);
+		}
+		else if (state == 2)
+		{
+			GPIOB->PSOR |= (1 << RED_LED_PIN);
+			GPIOB->PCOR |= (1 << GREEN_LED_PIN);
+		}
+		else if (state == 3)
+		{
+			GPIOB->PSOR |= (1 << RED_LED_PIN);
+			GPIOB->PSOR |= (1 << GREEN_LED_PIN);
+			GPIOD->PSOR |= (1 << BLUE_LED_PIN);
+		}
+		
 		if (order == 0)
 		{
-			if (state == 0)
-			{
-				GPIOB->PCOR |= (1 << RED_LED_PIN);
-				GPIOB->PCOR |= (1 << GREEN_LED_PIN);
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
-			}
-			else if (state == 1)
-			{
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PSOR |= (1 << GREEN_LED_PIN);
-			}
-			else if (state == 2)
-			{
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PCOR |= (1 << GREEN_LED_PIN);
-			}
-			else if (state == 3)
-			{
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PSOR |= (1 << GREEN_LED_PIN);
-				GPIOD->PSOR |= (1 << BLUE_LED_PIN);
-			}
+			state++;
 		}
 		else
 		{
-			if (state == 0)
+			if(state == 0)
 			{
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PSOR |= (1 << GREEN_LED_PIN);
-				GPIOD->PSOR |= (1 << BLUE_LED_PIN);
+				state = 3;
 			}
-			else if (state == 1)
+			else 
 			{
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PCOR |= (1 << GREEN_LED_PIN);
-			}
-			else if (state == 2)
-			{
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
-				GPIOB->PSOR |= (1 << RED_LED_PIN);
-				GPIOB->PSOR |= (1 << GREEN_LED_PIN);
-			}
-			else if (state == 3)
-			{
-				GPIOB->PCOR |= (1 << RED_LED_PIN);
-				GPIOB->PCOR |= (1 << GREEN_LED_PIN);
-				GPIOD->PCOR |= (1 << BLUE_LED_PIN);
+				state--;
 			}
 		}
-		state += 1;
 		state = state % 4;
 		PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK;
 	}
 }
 
-void PIT_LED_Change_Order()
+void PIT_LED_Change_Order(void)
 {
 	order = (order + 1) % 2;
 }

@@ -22,6 +22,28 @@ void RGBLed_Init(void)
 	GPIOB->PCOR |= (1 << GREEN_LED_PIN);
 }
 
+void Light_Init(void)
+{
+	SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK;
+	
+	PORTA->PCR[LIGHT_PIN] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[LIGHT_PIN] |= PORT_PCR_MUX(1);
+	
+	// Setam pentru input pinu-ul desi el default este pe input dar sa fim siguri
+	GPIOA->PDDR |= (0 << LIGHT_PIN);
+}
+
+uint8_t Light_Read(void)
+{
+	if(GPIOA->PDIR&(1<<LIGHT_PIN))
+	{
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 void Buzzer_Init(void)
 {
 	// Activarea semnalului de ceas pentru portul D (conexiune pe PTD4)

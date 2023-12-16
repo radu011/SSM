@@ -10,21 +10,18 @@ int main(void)
 {
 
 	UART0_Init(115200);
-	// PIT_Init();
-	// RGBLed_Init();
-	// Buzzer_Init();
-	Init_SysTick();
+	Buzzer_Init();
 	ADC0_Init();
-
-	// Buzzer_Sound(3);
-
-	// Buzzer_Sing();
+	Light_Init();
+	PIT_Init();
+	Init_SysTick();
+	RGBLed_Init();
 
 	for (;;)
 	{
 		if (play == 1)
 		{
-			// Buzzer_Sing();
+			Buzzer_Sing();
 			play = 0;
 		}
 				
@@ -35,7 +32,7 @@ int main(void)
 			uint8_t parte_fractionara1 = ((uint8_t)(measured_voltage * 10)) % 10;
 			uint8_t parte_fractionara2 = ((uint8_t)(measured_voltage * 100)) % 10;
 	
-			UART0_Transmit('V');
+			/*UART0_Transmit('V');
 			UART0_Transmit('o');
 			UART0_Transmit('l');
 			UART0_Transmit('t');
@@ -51,9 +48,11 @@ int main(void)
 			UART0_Transmit(parte_fractionara2 + 0x30);
 			UART0_Transmit('V');
 			UART0_Transmit(0x0A);
-			UART0_Transmit(0x0D);
+			UART0_Transmit(0x0D);*/
 			
 			flagADC=0;
 		}
+		
+		//UART0_Transmit(Light_Read()+0x30);
 	}
 }
