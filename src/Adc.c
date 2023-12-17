@@ -21,7 +21,9 @@ void ADC0_Init(void) {
 	// Selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV
 	ADC0->CFG1 |= ADC_CFG1_MODE(2) |
 							 ADC_CFG1_ADICLK(0) |
+							 ADC_CFG1_ADLSMP_MASK |
 							 ADC_CFG1_ADIV(2);
+	ADC0->CFG2 |= ADC_CFG2_ADLSTS_MASK; //ADLSTS
 	
 	// DIFF = 0 --> Conversii single-ended (PG. 464)
 	// Reset pentru a le seta ulterior
@@ -30,7 +32,8 @@ void ADC0_Init(void) {
 
 	// Selectarea modului de conversii continue, 
 	// pentru a-l putea folosi in tandem cu mecanismul de intreruperi
-	ADC0->SC3 |= ADC_SC3_ADCO_MASK;
+	ADC0->SC3 |= ADC_SC3_ADCO_MASK
+							| ADC_SC3_AVGS(2);
 	
 	// Activarea subsistemului de conversie prin aproximari succesive pe un anumit canal (PG.464)
 	ADC0->SC1[0] |= ADC_SC1_ADCH(ADC_CHANNEL);
@@ -143,13 +146,5 @@ void ADC0_IRQHandler(void){
 	
 	// dezactivare intrerupere
 	ADC0->SC1[0] &= ~ADC_SC1_AIEN_MASK;
-	
-	//float measured_voltage = (analog_input * 3.3f) / 65535;
-	//uint8_t parte_zecimala = (uint8_t) measured_voltage;
-	//uint8_t parte_fractionara1 = ((uint8_t)(measured_voltage * 10)) % 10;
-	//uint8_t parte_fractionara2 = ((uint8_t)(measured_voltage * 100)) % 10;
-	
-	
-	
 	
 }
