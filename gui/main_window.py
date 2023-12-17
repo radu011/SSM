@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QVBoxLayout, QWidget, QGroupBox, QLabel, QPushButton, QLineEdit, QTextEdit
 from PySide6.QtGui import QIcon, QPalette, QColor, QFont, QTextCursor
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 import pyqtgraph as pg
 from MySerial import MySerial
 
@@ -19,6 +19,15 @@ class MainWindow(QMainWindow):
         # set serial
         self.serial = MySerial()
         self.serial.start("COM10", 115200)
+        self.soundDataList = []
+        self.timeList = []
+        self.time = 0
+        self.lightDataList = []
+        
+        # QTimer pentru apelul periodic undei functii de citire de pe serial
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.read_data_timer)
+        self.timer.start(100) # time for read
 
         self.setWindowTitle(f"Proiect Microprocesoare {self.promotie}")
         self.setWindowIcon(QIcon("./icon.png"))
@@ -69,12 +78,14 @@ class MainWindow(QMainWindow):
         tertiary_layout.addWidget(team_box, 1)
         tertiary_layout.addWidget(control_panel_box, 5)
 
-        plot_widget = pg.PlotWidget()
-        hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
-        plot_widget.plot(hour, temperature)
+        #plot_widget = pg.PlotWidget()
+        #plot_widget.plot(self.lightDataList, self.time)
         
-        secondary_layout.addWidget(plot_widget, 3)
+        self.plot_widget = pg.PlotWidget()
+        self.plot = self.plot_widget.plot(self.timeList, self.soundDataList)
+        self.plot_widget.setYRange(0, 1)
+        
+        secondary_layout.addWidget(self.plot_widget, 3)
         secondary_layout.addLayout(tertiary_layout, 1)
 
         primary_layout.addLayout(secondary_layout, 4)
@@ -93,33 +104,58 @@ class MainWindow(QMainWindow):
         
         self.setCentralWidget(widget)
 
-    def add_text_debug(self, text: str, control: bool):
-        if(control is True):
+    def add_text_debug(self, text: str, control: int):
+        if(control == 0):
             self.text_edit.insertPlainText(f"CONTROL: {text}\n")
-        else:
+        elif(control == 1):
             self.text_edit.insertPlainText(f"INPUT: {text}\n")
+        else:
+            self.text_edit.insertPlainText(f"UNKNOWN: {text}\n")
         self.text_edit.verticalScrollBar().setValue(self.text_edit.verticalScrollBar().maximum())
+
+    def read_data_timer(self):
+        receivedData = self.serial.receiveData(4)
+        majorSound = chr(receivedData[0])
+        minorSound1 = chr(receivedData[1])
+        minorSound2 = chr(receivedData[2])
+        soundData = float(f"{majorSound}.{minorSound1}{minorSound2}")
+        lightData = chr(receivedData[3])
+        
+        print("Sound data", end='')
+        print(soundData)
+        print("Light data", end='')
+        print(lightData)
+
+        self.time += 1
+        self.soundDataList.append(soundData)
+        self.timeList.append(self.time)
+        self.lightDataList.append(lightData)
+        self.soundDataList = self.soundDataList[-100:]
+        self.timeList = self.timeList[-100:]
+        self.lightDataList = self.lightDataList[-100:]
+        self.plot.setData(self.timeList, self.soundDataList)
+                
 
     def send_input(self):
         input = self.line_edit.text()
         self.line_edit.clear()
-        self.add_text_debug(input, False)
+        self.add_text_debug(input, 1)
         self.serial.sendData(input)
 
     def send_control_order(self):
         self.serial.sendData("c")
-        self.add_text_debug("Change led order", True)
+        self.add_text_debug("Change led order", 0)
 
     def send_control_music(self):
         self.serial.sendData("m")
-        self.add_text_debug("Playing music...", True)
+        self.add_text_debug("Playing music...", 0)
         
     def get_light_status(self):
-        self.serial.sendData("l")
-        received = self.serial.receiveData(1)
+        # trebuie modificat
+        received = self.lightDataList[-1]
         # activ pe 0
         if(received == b'0'):
-            self.add_text_debug("Afara este lumina!", True)
+            self.add_text_debug("Afara este lumina!", 2)
         else:
-            self.add_text_debug("Afara este intuneric!", True)
+            self.add_text_debug("Afara este intuneric!", 2)
             

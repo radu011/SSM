@@ -24,10 +24,10 @@ class MySerial():
         # return self.connection.write(toSend)
         return self.connection.write(bytes(data, 'utf-8'))
 
-    def receiveData(self, noBytes: int) -> str:
+    def receiveData(self, noBytes: int) -> bytes:
         return self.connection.read(noBytes)
     
-    def receiveDataLine(self) -> str:
+    def receiveDataLine(self) -> bytes:
         return self.connection.readline()
     
     def stop(self):
