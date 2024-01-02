@@ -1,7 +1,0 @@
-{
-  "files.associations": {
-    "*.embeddedhtml": "html",
-    "uart.h": "c",
-    "gpio.h": "c"
-  }
-}
