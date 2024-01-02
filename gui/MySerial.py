@@ -1,4 +1,5 @@
 import serial
+from PySide6.QtCore import QThread, Signal
 
 class MySerial():
     port: str
@@ -11,7 +12,7 @@ class MySerial():
     def start(self, port:str, baudRate:int):
         self.port = port
         self.baudRate = baudRate
-        self.connection = serial.Serial(port=self.port, baudrate=self.baudRate)
+        self.connection = serial.Serial(port=self.port, baudrate=self.baudRate, timeout=0.05)
         self.connection.close()
         self.connection.open()
 
@@ -25,8 +26,14 @@ class MySerial():
         return self.connection.write(bytes(data, 'utf-8'))
 
     def receiveData(self, noBytes: int) -> bytes:
+        # if self.connection.in_waiting >= noBytes:
+        #     data = self.connection.read(noBytes)
+        #     self.connection.reset_input_buffer()
+        #     return data
+        # else:
+        #     return b''  # sau return None, depinde cum vreți să gestionați absența datelor
         return self.connection.read(noBytes)
-    
+        
     def receiveDataLine(self) -> bytes:
         return self.connection.readline()
     
@@ -46,4 +53,3 @@ class MySerial():
 
 # if __name__ == "__main__":
 #     main()
-

@@ -1,38 +1,36 @@
-from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QVBoxLayout, QWidget, QGroupBox, QLabel, QPushButton, QLineEdit, QTextEdit
-from PySide6.QtGui import QIcon, QPalette, QColor, QFont, QTextCursor
-from PySide6.QtCore import Qt
 import pyqtgraph as pg
-from MySerial import MySerial
-from main_window import MainWindow
-from PySide6.QtWidgets import QApplication
-from PySide6.QtGui import QScreen
+from PySide6 import QtWidgets
 import sys
 
-class App(QMainWindow):
+def create_plot():
+    app = QtWidgets.QApplication(sys.argv)
 
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-    
-    def initUI(self):
-        # Setăm titlul și dimensiunea ferestrei
-        self.setWindowTitle('Timer Example')
-        self.setGeometry(100, 100, 200, 100)
+    win = pg.GraphicsLayoutWidget(show=True, title="Segmented Line Plot Example")
+    plot = win.addPlot(title="Plot")
 
-        # Inițiem QTimer
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.functia_mea)
-        self.timer.start(1000)  # Timer-ul apelază functia_mea la fiecare 1000 ms (1 secundă)
+    # Punctele tale
+    points = [(0, 0), (1, 0.8)]
 
-    def functia_mea(self):
-        print("Funcția a fost apelată.")
+    for i in range(len(points) - 1):
+        x0, y0 = points[i]
+        x1, y1 = points[i + 1]
 
-def main():
-    app = QApplication(sys.argv)
-    ex = App()
-    ex.show()
+        # Calculează unde se intersectează segmentul cu y = 0.4
+        if y0 < 0.4 <= y1:
+            # Interpolarea liniară pentru a găsi punctul de intersecție
+            intersect_x = x0 + (x1 - x0) * (0.4 - y0) / (y1 - y0)
+
+            # Segmentul de jos
+            plot.plot([x0, intersect_x], [y0, 0.4], pen=pg.mkPen('r', width=3))
+
+            # Segmentul de sus
+            plot.plot([intersect_x, x1], [0.4, y1], pen=pg.mkPen('g', width=3))
+        else:
+            # Dacă segmentul nu se intersectează cu y = 0.4, îl desenăm cu o singură culoare
+            color = 'r' if y1 <= 0.4 else 'g'
+            plot.plot([x0, x1], [y0, y1], pen=pg.mkPen(color, width=3))
+
     sys.exit(app.exec_())
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    create_plot()

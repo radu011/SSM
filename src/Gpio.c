@@ -25,10 +25,10 @@ void RGBLed_Init(void)
 void Light_Init(void)
 {
 	SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK;
-	
+
 	PORTA->PCR[LIGHT_PIN] &= ~PORT_PCR_MUX_MASK;
 	PORTA->PCR[LIGHT_PIN] |= PORT_PCR_MUX(1);
-	
+
 	/* Setam pentru input pinu-ul desi el default este pe input dar sa fim siguri */
 	GPIOA->PDDR |= (0 << LIGHT_PIN);
 }
@@ -36,11 +36,12 @@ void Light_Init(void)
 uint8_t Light_Read(void)
 {
 	/* activ pe 0 */
-	if(GPIOA->PDIR & (1<<LIGHT_PIN))
+	if (GPIOA->PDIR & (1 << LIGHT_PIN))
 	{
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
@@ -52,7 +53,7 @@ void Buzzer_Init(void)
 
 	/* Utilizare GPIO ca varianta de multiplexare */
 	PORTD->PCR[BUZZER_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTD->PCR[BUZZER_PIN] |= PORT_PCR_MUX(1); // GPIO */
+	PORTD->PCR[BUZZER_PIN] |= PORT_PCR_MUX(1); /* GPIO */
 
 	/* Configurare pin pe post de output */
 	GPIOD_PDDR |= (1 << BUZZER_PIN);
@@ -65,7 +66,7 @@ void Buzzer_Init(void)
 
 void Buzzer_Sound(uint8_t noBip)
 {
-	uint32_t timer = 200000;
+	uint32_t timer = 20000;
 	uint32_t timerCount;
 
 	/* Numarul de bip-uri */
@@ -85,7 +86,7 @@ void Buzzer_Sound(uint8_t noBip)
 
 		/* Durata pauzei dintre sunete */
 		timerCount = 0;
-		while (timerCount < timer)
+		while (timerCount < timer*10)
 			timerCount++;
 	}
 }
@@ -103,10 +104,10 @@ static void playTone(int tone, int duration)
 	{
 		GPIOD_PSOR |= (1 << BUZZER_PIN);
 		delay(tone / 4);
-		// delay(tone / 2);
+		/* delay(tone / 2); */
 		GPIOD_PCOR |= (1 << BUZZER_PIN);
 		delay(tone * 2.5);
-		// delay(tone * 2);
+		/* delay(tone * 2); */
 	}
 	GPIOD_PCOR |= (1 << BUZZER_PIN);
 }

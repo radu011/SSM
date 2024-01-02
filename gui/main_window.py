@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         # QTimer pentru apelul periodic undei functii de citire de pe serial
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.read_data_timer)
-        self.timer.start(100) # time for read
+        self.timer.start(50) # time for read
 
         self.setWindowTitle(f"Proiect Microprocesoare {self.promotie}")
         self.setWindowIcon(QIcon("./icon.png"))
@@ -104,6 +104,47 @@ class MainWindow(QMainWindow):
         
         self.setCentralWidget(widget)
 
+
+
+    def read_data_timer(self):
+        receivedData = self.serial.receiveData(4)
+        if len(receivedData) < 4:
+            return
+        
+        majorSound = chr(receivedData[0])
+        minorSound1 = chr(receivedData[1])
+        minorSound2 = chr(receivedData[2])
+        soundData = float(f"{majorSound}.{minorSound1}{minorSound2}")
+        lightData = chr(receivedData[3])
+        print(lightData + ": valoare")
+
+        self.time += 1
+        self.soundDataList.append(soundData)
+        self.timeList.append(self.time)
+        self.lightDataList.append(lightData)
+        
+        # Limitează datele pentru a menține performanța
+        max_length = 20
+        self.soundDataList = self.soundDataList[-max_length:]
+        self.timeList = self.timeList[-max_length:]
+        self.lightDataList = self.lightDataList[-max_length:]
+
+        # Actualizează plotul cu bare verticale
+        self.plot_widget.clear()
+        for x, y in zip(self.timeList, self.soundDataList):
+            color = self.get_color_for_value(y)
+            # Desenează o bară verticală pentru fiecare valoare
+            self.plot_widget.plot([x, x], [0, y], pen=color, symbolBrush=color, symbolSize=5)
+
+    def get_color_for_value(self, value):
+        if value < 0.2:
+            return 'g'  # Verde
+        elif value < 0.4:
+            return 'y'  # Galben
+        else:
+            return 'r'  # Roșu
+               
+               
     def add_text_debug(self, text: str, control: int):
         if(control == 0):
             self.text_edit.insertPlainText(f"CONTROL: {text}\n")
@@ -111,30 +152,7 @@ class MainWindow(QMainWindow):
             self.text_edit.insertPlainText(f"INPUT: {text}\n")
         else:
             self.text_edit.insertPlainText(f"UNKNOWN: {text}\n")
-        self.text_edit.verticalScrollBar().setValue(self.text_edit.verticalScrollBar().maximum())
-
-    def read_data_timer(self):
-        receivedData = self.serial.receiveData(4)
-        majorSound = chr(receivedData[0])
-        minorSound1 = chr(receivedData[1])
-        minorSound2 = chr(receivedData[2])
-        soundData = float(f"{majorSound}.{minorSound1}{minorSound2}")
-        lightData = chr(receivedData[3])
-        
-        print("Sound data", end='')
-        print(soundData)
-        print("Light data", end='')
-        print(lightData)
-
-        self.time += 1
-        self.soundDataList.append(soundData)
-        self.timeList.append(self.time)
-        self.lightDataList.append(lightData)
-        self.soundDataList = self.soundDataList[-100:]
-        self.timeList = self.timeList[-100:]
-        self.lightDataList = self.lightDataList[-100:]
-        self.plot.setData(self.timeList, self.soundDataList)
-                
+        self.text_edit.verticalScrollBar().setValue(self.text_edit.verticalScrollBar().maximum()) 
 
     def send_input(self):
         input = self.line_edit.text()
@@ -151,11 +169,8 @@ class MainWindow(QMainWindow):
         self.add_text_debug("Playing music...", 0)
         
     def get_light_status(self):
-        # trebuie modificat
-        received = self.lightDataList[-1]
         # activ pe 0
-        if(received == b'0'):
+        if(self.lightDataList[-1] == '0'):
             self.add_text_debug("Afara este lumina!", 2)
         else:
             self.add_text_debug("Afara este intuneric!", 2)
-            
