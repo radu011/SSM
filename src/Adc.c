@@ -6,37 +6,37 @@ uint16_t analog_input;
 
 void ADC0_Init(void)
 {
-	/* Activarea semnalului de ceas pentru modulul periferic ADC */
+	/* activarea semnalului de ceas pentru modulul periferic ADC */
 	SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
 
-	/* Functia de calibrare */
+	/* functia de calibrare */
 	ADC0_Calibrate();
 
 	/* valoare de reset pentru CFG1 */
 	ADC0->CFG1 = 0x00;
 
-	/* Selectarea modului de conversie pe 10 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
-	/* Selectarea sursei de ceas pentru generarea ceasului intern --> ADICLK */
-	/* Selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV */
+	/* selectarea modului de conversie pe 10 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
+	/* selectarea sursei de ceas pentru generarea ceasului intern --> ADICLK */
+	/* selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV */
 	ADC0->CFG1 |= ADC_CFG1_MODE(2) |
 				  ADC_CFG1_ADICLK(0) |
 				  ADC_CFG1_ADLSMP_MASK |
 				  ADC_CFG1_ADIV(2);
-	ADC0->CFG2 |= ADC_CFG2_ADLSTS_MASK; /*ADLSTS
+	ADC0->CFG2 |= ADC_CFG2_ADLSTS_MASK;
 
 	/* DIFF = 0 --> Conversii single-ended (PG. 464) */
-	/* Reset pentru a le seta ulterior */
+	/* reset pentru a le seta ulterior */
 	ADC0->SC1[0] = 0x00;
 	ADC0->SC3 = 0x00;
 
-	/* Selectarea modului de conversii continue, */
+	/* selectarea modului de conversii continue, */
 	/* pentru a-l putea folosi in tandem cu mecanismul de intreruperi */
 	ADC0->SC3 |= ADC_SC3_ADCO_MASK | ADC_SC3_AVGS(3);
 
-	/* Activarea subsistemului de conversie prin aproximari succesive pe un anumit canal (PG.464) */
+	/* activarea subsistemului de conversie prin aproximari succesive pe un anumit canal (PG.464) */
 	ADC0->SC1[0] |= ADC_SC1_ADCH(ADC_CHANNEL);
 
-	/* Enables conversion complete interrupts */
+	/* enables conversion complete interrupts */
 	ADC0->SC1[0] |= ADC_SC1_AIEN_MASK;
 
 	NVIC_ClearPendingIRQ(ADC0_IRQn);

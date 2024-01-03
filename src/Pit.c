@@ -68,7 +68,7 @@ void PIT_IRQHandler(void)
 			}
 		}
 		state = state % 4;
-		PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK;
+		PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK; // resetare
 	}
 }
 

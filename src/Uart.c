@@ -4,18 +4,10 @@
 
 void UART0_Transmit(uint8_t data)
 {
-	/* Punem in asteptare pana cand registrul de transmisie a datelor nu este gol */
+	/* punem in asteptare pana cand registrul de transmisie a datelor este pus pe 1 */
 	while (!(UART0->S1 & UART0_S1_TDRE_MASK))
 		;
 	UART0->D = data;
-}
-
-uint8_t UART0_Receive(void)
-{
-	/* Punem in asteptare pana cand registrul de receptie nu este plin */
-	while (!(UART0->S1 & UART0_S1_RDRF_MASK))
-		;
-	return UART0->D;
 }
 
 void UART0_Init(uint32_t baud_rate)
@@ -93,22 +85,15 @@ void UART0_IRQHandler(void)
 		if (ch == 'c') /* c = change */
 		{
 			PIT_LED_Change_Order();
-			UART0_Transmit(ch);
 		}
 		else if (ch == 'm') /* m = music */
 		{
 			play = 1;
-			UART0_Transmit(ch);
 		}
 		else if (ch == 'l') /* l = read light sensor data */
 		{
 			uint8_t light = Light_Read();
 			UART0_Transmit(light + 0x30);
-		}
-		else
-		{
-			/* echo buffer */
-			UART0_Transmit(ch);
 		}
 	}
 }
