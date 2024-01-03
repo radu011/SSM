@@ -8,16 +8,16 @@ uint16_t analog_input;
 
 void ADC0_Init(void)
 {
-
 	/* Activarea semnalului de ceas pentru modulul periferic ADC */
 	SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
 
 	/* Functia de calibrare */
 	ADC0_Calibrate();
 
+	/* valoare de reset pentru CFG1 */
 	ADC0->CFG1 = 0x00;
 
-	/* Selectarea modului de conversie pe 16 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
+	/* Selectarea modului de conversie pe 10 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
 	/* Selectarea sursei de ceas pentru generarea ceasului intern --> ADICLK */
 	/* Selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV */
 	ADC0->CFG1 |= ADC_CFG1_MODE(2) |
@@ -118,29 +118,6 @@ int ADC0_Calibrate(void)
 	ADC0->SC3 &= ~ADC_SC3_CAL_MASK;
 
 	return (0);
-}
-
-uint16_t ADC0_Read(void)
-{
-
-	/* A conversion is initiated following a write to SC1A, with SC1n[ADCH] not all 1's (PG. 485) */
-	ADC0->SC1[0] |= ADC_SC1_ADCH(ADC_CHANNEL);
-
-	/* ADACT is set when a conversion is initiated */
-	/* and cleared when a conversion is completed or aborted. */
-	while (ADC0->SC2 & ADC_SC2_ADACT_MASK)
-		;
-
-	/* A conversion is completed when the result of the conversion is transferred */
-	/* into the data result registers, Rn (PG. 486) */
-
-	/* If the compare functions are disabled, this is indicated by setting of SC1n[COCO] */
-	/* If hardware averaging is enabled, the respective SC1n[COCO] sets only if */
-	/* the last of the selected number of conversions is completed (PG. 486) */
-	while (!(ADC0->SC1[0] & ADC_SC1_COCO_MASK))
-		;
-
-	return (uint16_t)ADC0->R[0];
 }
 
 void ADC0_IRQHandler(void)
