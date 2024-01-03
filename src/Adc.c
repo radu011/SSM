@@ -6,16 +6,16 @@ uint16_t analog_input;
 
 void ADC0_Init(void)
 {
-
 	/* Activarea semnalului de ceas pentru modulul periferic ADC */
 	SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
 
 	/* Functia de calibrare */
 	ADC0_Calibrate();
 
+	/* valoare de reset pentru CFG1 */
 	ADC0->CFG1 = 0x00;
 
-	/* Selectarea modului de conversie pe 16 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
+	/* Selectarea modului de conversie pe 10 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
 	/* Selectarea sursei de ceas pentru generarea ceasului intern --> ADICLK */
 	/* Selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV */
 	ADC0->CFG1 |= ADC_CFG1_MODE(2) |
