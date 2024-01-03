@@ -1,5 +1,7 @@
 #include "Gpio.h"
 
+volatile uint8_t play;
+
 void RGBLed_Init(void)
 {
 	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;

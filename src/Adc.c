@@ -1,8 +1,6 @@
 #include "Adc.h"
 #include "Uart.h"
 
-#define ADC_CHANNEL (15) /* PORT C PIN 1 */
-
 volatile uint8_t flagADC;
 uint16_t analog_input;
 
@@ -118,29 +116,6 @@ int ADC0_Calibrate(void)
 	ADC0->SC3 &= ~ADC_SC3_CAL_MASK;
 
 	return (0);
-}
-
-uint16_t ADC0_Read(void)
-{
-
-	/* A conversion is initiated following a write to SC1A, with SC1n[ADCH] not all 1's (PG. 485) */
-	ADC0->SC1[0] |= ADC_SC1_ADCH(ADC_CHANNEL);
-
-	/* ADACT is set when a conversion is initiated */
-	/* and cleared when a conversion is completed or aborted. */
-	while (ADC0->SC2 & ADC_SC2_ADACT_MASK)
-		;
-
-	/* A conversion is completed when the result of the conversion is transferred */
-	/* into the data result registers, Rn (PG. 486) */
-
-	/* If the compare functions are disabled, this is indicated by setting of SC1n[COCO] */
-	/* If hardware averaging is enabled, the respective SC1n[COCO] sets only if */
-	/* the last of the selected number of conversions is completed (PG. 486) */
-	while (!(ADC0->SC1[0] & ADC_SC1_COCO_MASK))
-		;
-
-	return (uint16_t)ADC0->R[0];
 }
 
 void ADC0_IRQHandler(void)
