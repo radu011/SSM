@@ -1,5 +1,7 @@
 #include "Gpio.h"
 
+volatile uint8_t play;
+
 void RGBLed_Init(void)
 {
 	/* activarea sursei de ceas pentru portul B */

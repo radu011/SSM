@@ -1,8 +1,6 @@
 #include "Adc.h"
 #include "Uart.h"
 
-#define ADC_CHANNEL (15) /* PORT C PIN 1 */
-
 volatile uint8_t flagADC;
 uint16_t analog_input;
 

@@ -4,11 +4,8 @@
 #include "SysTick.h"
 #include "Adc.h"
 
-uint8_t play;
-
 int main(void)
 {
-
 	UART0_Init(115200);
 	Buzzer_Init();
 	ADC0_Init();
@@ -17,7 +14,7 @@ int main(void)
 	Init_SysTick();
 	RGBLed_Init();
 	
-	Light_Init();    /* probleme */
+	Light_Init(); 
 
 	float prev = 0;
 	
@@ -48,13 +45,8 @@ int main(void)
 				Buzzer_Sound(2);
 			else if(prev < 0.2 && measured_voltage > 0.2)
 				Buzzer_Sound(1);
-			/*else if(prev > 0.4 && measured_voltage > 0.2 && measured_voltage < 0.4)
-				Buzzer_Sound(2);
-			else if(prev > 0.2 && measured_voltage < 0.2)
-				Buzzer_Sound(1);*/
 			
 			flagADC=0;
 		} 
-
 	}
 }
