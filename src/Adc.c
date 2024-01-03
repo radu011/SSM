@@ -15,13 +15,16 @@ void ADC0_Init(void)
 	/* valoare de reset pentru CFG1 */
 	ADC0->CFG1 = 0x00;
 
-	/* selectarea modului de conversie pe 10 biti single-ended --> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
+
+	/* selectarea modului de conversie pe 10 biti single-ended
+		--> MODE => pun 2 ca sa fie 10 biti pentru rezolutie (single-ended precision) */
 	/* selectarea sursei de ceas pentru generarea ceasului intern --> ADICLK */
 	/* selectarea ratei de divizare folosit de periferic pentru generarea ceasului intern --> ADIV */
 	ADC0->CFG1 |= ADC_CFG1_MODE(2) |
 				  ADC_CFG1_ADICLK(0) |
 				  ADC_CFG1_ADLSMP_MASK |
 				  ADC_CFG1_ADIV(2);
+
 	ADC0->CFG2 |= ADC_CFG2_ADLSTS_MASK;
 
 	/* DIFF = 0 --> Conversii single-ended (PG. 464) */
@@ -39,9 +42,11 @@ void ADC0_Init(void)
 	/* enables conversion complete interrupts */
 	ADC0->SC1[0] |= ADC_SC1_AIEN_MASK;
 
+	/* activarea intreruperii pentru ADC */
 	NVIC_ClearPendingIRQ(ADC0_IRQn);
 	NVIC_EnableIRQ(ADC0_IRQn);
 
+	/* resetarea flag-ului pentru semnalizarea finalizarii conversiei */
 	flagADC = 0;
 }
 

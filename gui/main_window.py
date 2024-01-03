@@ -116,7 +116,6 @@ class MainWindow(QMainWindow):
         minorSound2 = chr(receivedData[2])
         soundData = float(f"{majorSound}.{minorSound1}{minorSound2}")
         lightData = chr(receivedData[3])
-        print(lightData + ": valoare")
 
         self.time += 1
         self.soundDataList.append(soundData)
@@ -171,6 +170,6 @@ class MainWindow(QMainWindow):
     def get_light_status(self):
         # activ pe 0
         if(self.lightDataList[-1] == '0'):
-            self.add_text_debug("Afara este lumina!", 2)
+            self.add_text_debug("Afara este lumina!", 0)
         else:
-            self.add_text_debug("Afara este intuneric!", 2)
+            self.add_text_debug("Afara este intuneric!", 0)
