@@ -11,9 +11,13 @@ TOADER Radu-Marian (C114C)
 1. In folderul 'doc' se afla:
    
     1.1. folderul 'drawio' in care avem toate schemele necesare pentru documentatie
+   
     1.2. folderul 'img' in care se regasesc toate imaginile folosite in documentatie
+   
     1.3. folderul 'videoclipuri' in care se regaseste un videoclip in care prezentam functionarea programului (un demo al programului folosind interfata grafica)
+   
     1.4. documentatia se afla in fisierul 'DOC.docx'
+   
     1.5. cele 2 pdf-uri cu cerintele proiectului
 
 3. In folderul 'gui' se afla codul pentru interfata grafica. Pentru a rula interfata grafica se poate deschide proiectul in VSCode si se poate rula din buton, dar tinand cont de faptul ca Main-ul 
