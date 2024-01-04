@@ -6,6 +6,11 @@ IONASCU Bianca-Daniela (C114D)
 
 TOADER Radu-Marian (C114C)
 
+# Prezentare video
+
+1. Ionascu-> https://youtu.be/8lf-N7PHyh0
+2. Toader-> https://youtu.be/aY3Aulq2M24
+
 # Componenta proiect
 
 1. In folderul 'doc' se afla:
