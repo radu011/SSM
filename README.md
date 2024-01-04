@@ -63,4 +63,4 @@ Acestea sunt comenzile reale din spatele butoanelor.
 
 ## Exemplu Grafic
 
-![Exemplu Grafic](image.png)
+![Exemplu Grafic](https://github.com/radu011/SSM/blob/main/doc/img/interfataGrafica.png)
